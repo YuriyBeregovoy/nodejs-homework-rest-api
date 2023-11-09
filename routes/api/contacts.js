@@ -14,21 +14,25 @@ router.get('/', async (req, res, next) => {
   try {
     const contacts = await listContacts();
 
-    if (!contacts) return next();
-    res.status(200).json(contacts);
+    res.json(contacts);
   } catch (error) {
-    next(error);
+    res.status(500).json({message: "Server error"})
   }
 });
 
 router.get('/:contactId', async (req, res, next) => {
-   const contact = await getContactById(req.params.contactId.toLowerCase());
-  if (contact) {
+  try {
+    const { contactId } = req.params;
+    const contact = await getContactById(contactId);
+    if (!contact) {
+      return res.status(404).json({message: "Not found"})
+    }
     res.json(contact);
-  } else {
-    res.status(404).json({ message: 'Not found' });
   }
-})
+  catch (error) {
+    res.status(500).json({message: "Server error"})
+  }
+});
 
 router.post('/', async (req, res, next) => {
    if (!req.body.name || !req.body.email || !req.body.phone) {
