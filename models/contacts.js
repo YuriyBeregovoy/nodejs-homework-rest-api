@@ -4,7 +4,8 @@ const path = require('path');
 
 const contactsPath = path.resolve("./models/contacts.json");
 
-const listContacts = async () => { try {
+const listContacts = async () => { 
+  try {
     const data = await fs.readFile(contactsPath, 'utf-8');
     return JSON.parse(data);
   } catch (error) {
@@ -13,7 +14,7 @@ const listContacts = async () => { try {
 
 const getContactById = async (contactId) => {
   const contacts = await listContacts();
-  return contacts.find((contact) => contact.id === contactId);
+  return contacts.find(contact => contact.id === contactId) || null;
 }
 
 const removeContact = async (contactId) => {
