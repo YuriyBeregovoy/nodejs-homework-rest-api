@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 
     res.json(contacts);
   } catch (error) {
-    res.status(500).json({message: "Server error"})
+    next(error);
   }
 });
 
@@ -30,8 +30,7 @@ router.get('/:contactId', async (req, res, next) => {
     res.json(contact);
   }
   catch (error) {
-    res.status(500).json({message: "Server error"})
-  }
+    next(error);
 });
 
 router.post('/', async (req, res, next) => {
