@@ -11,11 +11,30 @@ const listContacts = async () => { try {
     return [];
   }}
 
-const getContactById = async (contactId) => {}
+const getContactById = async (contactId) => {
+  const contacts = await listContacts();
+  const foundContact = contacts.find((contact) => contact.id === contactId);
+  return foundContact || null;
+}
 
-const removeContact = async (contactId) => {}
+const removeContact = async (contactId) => {
+ const contacts = await listContacts();
+  const index = contacts.findIndex(contact => contact.id === contactId);
+  if (index === -1) {
+    return null;
+  }
+  const removedContact = contacts.splice(index, 1)[0];
+  await promises.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+  return removedContact;
+}
 
-const addContact = async (body) => {}
+const addContact = async (body) => {
+   const contacts = await listContacts();
+  const newContact = { body };
+  contacts.push(newContact);
+  await promises.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+  return newContact;
+}
 
 const updateContact = async (contactId, body) => {}
 
