@@ -11,12 +11,18 @@ const {
 const router = express.Router()
 
 router.get('/', async (req, res, next) => {
-  const result = await listContacts();
-  res.json(result)
-})
+  try {
+    const contacts = await listContacts();
+
+    if (!contacts) return next();
+    res.status(200).json(contacts);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get('/:contactId', async (req, res, next) => {
-   const contact = await getContactById(req.params.contactId);
+   const contact = await getContactById(req.params.contactId.toLowerCase());
   if (contact) {
     res.json(contact);
   } else {
@@ -33,7 +39,7 @@ router.post('/', async (req, res, next) => {
 })
 
 router.delete('/:contactId', async (req, res, next) => {
-   const deletedContact = await removeContact(req.params.contactId);
+   const deletedContact = await removeContact(req.params.contactId.toLowerCase());
   if (deletedContact) {
     res.json({ message: 'Contact deleted' });
   } else {
@@ -46,7 +52,7 @@ router.put('/:contactId', async (req, res, next) => {
     return res.status(400).json({ message: 'Missing fields' });
   }
 
-  const updatedContact = await updateContact(req.params.contactId, req.body);
+  const updatedContact = await updateContact(req.params.contactId.toLowerCase(), req.body);
   if (updatedContact) {
     res.json(updatedContact);
   } else {
