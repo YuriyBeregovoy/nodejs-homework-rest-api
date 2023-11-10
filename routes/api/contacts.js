@@ -75,7 +75,7 @@ router.put('/:contactId', async (req, res, next) => {
   try {
     const { error } = addSchema.validate(req.body);
     if (error) {
-      throw HttpError(400, error.message);
+      throw new HttpError(400, error.message);
     }
     const {contactId} = req.params;
     const result = await updateContact(contactId, req.body);
