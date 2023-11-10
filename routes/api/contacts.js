@@ -63,7 +63,7 @@ router.delete('/:contactId', async (req, res, next) => {
     if (!result) {
       throw res.status(404).json({ message: "Not found" });
     }
-   res.status({ message: "Delete success" });
+   res.json({ message: "Delete success" });
   }
   catch (error) {
     next(error);
