@@ -16,13 +16,13 @@ const addSchema = Joi.object({
   phone: Joi.string().pattern(/^\(\d{3}\) \d{3}-\d{4}$/).required(),
 });
 
-const getAll = async (req, res, next) => {
+const getAll = async (req, res) => {
   
     const contacts = await listContacts();
     res.json(contacts);
   }
 
-const getById = async (req, res, next) => {
+const getById = async (req, res) => {
     const { contactId } = req.params;
     const contact = await getContactById(contactId);
     if (!contact) {
@@ -30,7 +30,7 @@ const getById = async (req, res, next) => {
     }
     res.json(contact);
 }
-const add = async (req, res, next) => {
+const add = async (req, res) => {
     const { error } = addSchema.validate(req.body);
     if (error) {
       throw HttpError(400, error.message);
@@ -39,7 +39,7 @@ const add = async (req, res, next) => {
     res.status(201).json(result);
 }
 
-const updateById =  async (req, res, next) => {
+const updateById =  async (req, res) => {
     const { error } = addSchema.validate(req.body);
     if (error) {
       throw new HttpError(400, error.message);
@@ -51,7 +51,7 @@ const updateById =  async (req, res, next) => {
     }
     res.json(result);
 }
-const deleteById = async (req, res, next) => {
+const deleteById = async (req, res) => {
     const {contactId} = req.params;
     const result = await removeContact(contactId);
     if (!result) {
