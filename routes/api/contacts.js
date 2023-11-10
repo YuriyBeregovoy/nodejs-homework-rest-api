@@ -66,15 +66,20 @@ router.delete('/:contactId', async (req, res, next) => {
 })
 
 router.put('/:contactId', async (req, res, next) => {
-   if (!req.body) {
-    return res.status(400).json({ message: 'Missing fields' });
+  try {
+    const { error } = addSchema.validate(req.body);
+    if (error) {
+      throw HttpError(400, error.message);
+    }
+    const {contactId} = req.params;
+    const result = await updateContact(contactId, req.body);
+    if (!result) {
+       throw HttpError(404, error.message);
+    }
+    res.json(result);
   }
-
-  const updatedContact = await updateContact(req.params.contactId.toLowerCase(), req.body);
-  if (updatedContact) {
-    res.json(updatedContact);
-  } else {
-    res.status(404).json({ message: 'Not found' });
+  catch (error) {
+    next(error);
   }
 })
 
