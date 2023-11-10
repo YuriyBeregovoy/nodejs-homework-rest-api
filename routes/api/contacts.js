@@ -1,10 +1,14 @@
-const express = require('express')
+const express = require('express');
 
-const {getAll, getById, add,  updateById, deleteById } = require("../../controllers/contacts")
+const {
+  getAll,
+  getById,
+  add,
+  updateById,
+  deleteById
+} = require("../../controllers/contacts");
 
-
-const router = express.Router()
-
+const router = express.Router();
 
 
 router.get('/', getAll);
@@ -17,5 +21,4 @@ router.put('/:contactId', updateById)
 
 router.delete('/:contactId', deleteById)
 
-
-module.exports = router
+module.exports = router;
