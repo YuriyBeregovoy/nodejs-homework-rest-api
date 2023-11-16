@@ -1,13 +1,11 @@
 const { Schema, model } = require("mongoose")
-
-const contactSchema = new Schema({
-  name: String,
-  
-  email: String,
+const Joi = require('joi');
  
-  phone: String,
-
-  favorite: Boolean,
+const contactSchema = new Schema({
+   name: Joi.string().required(),
+  email: Joi.string().email().required(),
+  phone: Joi.string().pattern(/^\(\d{3}\) \d{3}-\d{4}$/).required(),
+  favorite: Joi.boolean().required(),
 
 });
 
