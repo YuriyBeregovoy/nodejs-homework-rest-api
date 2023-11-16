@@ -7,6 +7,7 @@ const contactSchema = new Schema({
  
   phone: String,
 
+  favorite: Boolean,
 
 });
 
