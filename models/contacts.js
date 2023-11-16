@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose")
 
-console contactSchema = new Schema({
+const contactSchema = new Schema({
   name: {
     type: String,
     required: [true, 'Set name for contact'],
@@ -16,9 +16,10 @@ console contactSchema = new Schema({
     default: false,
   },
 });
+
 const Contact = model("contact", contactSchema);
 
-module.exports = Book;
+module.exports = Contact;
 
 
 
