@@ -1,4 +1,4 @@
-const Contact = require("../models/contacts")
+const Contact = require("../models/contact")
 
 // const Joi = require('joi');
 // const HttpError = require('http-errors');
