@@ -21,8 +21,9 @@ const ctrlWrapper = require('../helpers/ctrlWrapper');
 
 const getAll = async (req, res) => {
   
-  const contacts = await Contact.find();
-  res.json(contacts);
+  const result = await Contact.find();
+   console.log(result);
+  res.json(result);
 };
 
 // const getById = async (req, res) => {
