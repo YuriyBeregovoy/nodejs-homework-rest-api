@@ -13,12 +13,14 @@ const router = express.Router();
 
 router.get('/', getAll);
 
-router.get('/:contactId', isValidId, getById )
+router.get('/:contactId', isValidId, getById);
 
-router.post('/', add)
+router.post('/', add);
 
-router.put('/:contactId', isValidId, updateById)
+router.put('/:contactId', isValidId, updateById);
 
-router.delete('/:contactId', isValidId, deleteById)
+router.patch('/:contactId/favorite', isValidId, updateById);
+
+router.delete('/:contactId', isValidId, deleteById);
 
 module.exports = router;
