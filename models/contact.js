@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const hahdleMongooseError = require("../helpers/handleMongooseError");
+const Joi = require("joi");
  
 const contactSchema = new Schema(
   {
@@ -21,10 +22,13 @@ const contactSchema = new Schema(
 
 contactSchema.post("save", hahdleMongooseError);
 
+const updateFavoriteSchema = Joi.object({
+  favorite: Joi.boolean().required(),
+})
 
 const Contact = model("contact", contactSchema);
 
-module.exports = Contact;
+module.exports = {Contact, updateFavoriteSchema};
 
 
 
