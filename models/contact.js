@@ -19,7 +19,7 @@ const contactSchema = new Schema(
   });
 
 contactSchema.post("save", (error, data, next) => {
-  console.log(error);
+  error.status = 400;
   next();
   })
 const Contact = model("contact", contactSchema);
