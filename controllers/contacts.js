@@ -15,20 +15,19 @@ const ctrlWrapper = require('../helpers/ctrlWrapper');
 
 
 const getAll = async (req, res) => {
-  
-  const result = await Contact.find();
+    const result = await Contact.find();
    console.log(result);
   res.json(result);
 };
 
-// const getById = async (req, res) => {
-//   const { contactId } = req.params;
-//   const contact = await getContactById(contactId);
-//   if (!contact) {
-//     return res.status(404).json({ message: "Not found" })
-//   }
-//   res.json(contact);
-// };
+const getById = async (req, res) => {
+  const { contactId } = req.params;
+  const contact = await Contact.findOne({_id: contactId});
+  if (!contact) {
+    return res.status(404).json({ message: "Not found" })
+  }
+  res.json(contact);
+};
 
 const add = async (req, res) => {
    const result = await Contact.create(req.body);
@@ -60,7 +59,7 @@ const add = async (req, res) => {
 
 module.exports = {
   getAll: ctrlWrapper(getAll),
-  // getById: ctrlWrapper(getById),
+  getById: ctrlWrapper(getById),
   add: ctrlWrapper(add),
   // updateById: ctrlWrapper(updateById),
   // deleteById: ctrlWrapper(deleteById)
