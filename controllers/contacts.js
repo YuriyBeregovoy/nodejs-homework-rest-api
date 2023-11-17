@@ -22,7 +22,7 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   const { contactId } = req.params;
-  const contact = await Contact.findOne({_id: contactId});
+  const contact = await Contact.findById(contactId);
   if (!contact) {
     return res.status(404).json({ message: "Not found" })
   }
