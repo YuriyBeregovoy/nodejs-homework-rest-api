@@ -51,5 +51,5 @@ module.exports = {
   getById: ctrlWrapper(getById),
   add: ctrlWrapper(add),
   updateById: ctrlWrapper(updateById),
-  deleteById: ctrlWrapper(deleteById)
+  // deleteById: ctrlWrapper(deleteById)
 };
