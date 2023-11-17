@@ -1,5 +1,4 @@
-const Contact = require("../models/contact")
-const updateFavoriteSchema = require("../models/contact").updateFavoriteSchema;
+const {Contact, updateFavoriteSchema} = require("../models/contact")
 
 const HttpError = require('http-errors');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
