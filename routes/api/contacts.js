@@ -3,7 +3,7 @@ const express = require('express');
 const {
   getAll,
   // getById,
-  // add,
+  add,
   // updateById,
   // deleteById
 } = require("../../controllers/contacts");
@@ -15,7 +15,7 @@ router.get('/', getAll);
 
 // router.get('/:contactId', getById )
 
-// router.post('/', add)
+router.post('/', add)
 
 // router.put('/:contactId', updateById)
 
