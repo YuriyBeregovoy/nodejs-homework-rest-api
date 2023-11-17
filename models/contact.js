@@ -18,6 +18,10 @@ const contactSchema = new Schema(
     },
   });
 
+contactSchema.post("save", (error, data, next) => {
+  console.log(error);
+  next();
+  })
 const Contact = model("contact", contactSchema);
 
 module.exports = Contact;
