@@ -1,7 +1,6 @@
 const express = require('express');
 const isValidId = require("../../middlewares/isValidId")
-const updateFavoriteSchema = require("../../models/contact")
-const {
+const { updateStatusContact } = require("../../controllers/contacts");const {
   getAll,
   getById,
   add,
@@ -20,7 +19,7 @@ router.post('/', add);
 
 router.put('/:contactId', isValidId, updateById);
 
-router.patch('/:contactId/favorite', isValidId, updateFavoriteSchema, updateById);
+router.patch('/:contactId/favorite', isValidId, updateStatusContact);
 
 router.delete('/:contactId', isValidId, deleteById);
 
