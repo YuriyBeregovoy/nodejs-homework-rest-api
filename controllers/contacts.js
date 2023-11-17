@@ -3,9 +3,6 @@ const {Contact, updateFavoriteSchema} = require("../models/contact")
 const HttpError = require('http-errors');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 
-
-
-
 const getAll = async (req, res) => {
     const result = await Contact.find();
    console.log(result);
