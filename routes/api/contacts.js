@@ -2,7 +2,7 @@ const express = require('express');
 
 const {
   getAll,
-  // getById,
+  getById,
   add,
   // updateById,
   // deleteById
@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get('/', getAll);
 
-// router.get('/:contactId', getById )
+router.get('/:contactId', getById )
 
 router.post('/', add)
 
