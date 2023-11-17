@@ -19,7 +19,8 @@ const contactSchema = new Schema(
     },
   });
 
-contactSchema.post("save", hahdleMongooseError)
+contactSchema.post("save", hahdleMongooseError);
+
 
 const Contact = model("contact", contactSchema);
 
