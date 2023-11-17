@@ -1,6 +1,8 @@
 const express = require('express');
 const isValidId = require("../../middlewares/isValidId")
-const { updateStatusContact } = require("../../controllers/contacts");const {
+const { updateStatusContact } = require("../../controllers/contacts");
+
+const {
   getAll,
   getById,
   add,
