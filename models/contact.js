@@ -1,5 +1,7 @@
-const { Schema, model } = require("mongoose")
- const hahdleMongooseError = require("../helpers/handleMongooseError")
+const { Schema, model } = require("mongoose");
+const hahdleMongooseError = require("../helpers/handleMongooseError");
+ 
+
 const contactSchema = new Schema(
   {
     name: {
@@ -18,7 +20,8 @@ const contactSchema = new Schema(
     },
   });
 
-contactSchema.post("save", hahdleMongooseError )
+contactSchema.post("save", hahdleMongooseError)
+
 const Contact = model("contact", contactSchema);
 
 module.exports = Contact;
