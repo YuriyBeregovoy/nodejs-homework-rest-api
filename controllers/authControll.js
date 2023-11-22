@@ -4,9 +4,12 @@ const ctrlWrapper = require('../helpers/ctrlWrapper');
 
 
 const register = async (req, res) => {
-  const { error } = registerSchema.validate(req.body);
-  if (error) {
-    throw HttpError(400, error.message);
+
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+
+  if (user) {
+    throw HttpError(409, "Email already sn use");
   }
   const newUser = await User.create(req.body);
 
