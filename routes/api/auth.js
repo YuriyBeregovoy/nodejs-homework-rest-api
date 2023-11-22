@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { schemas } = require("../../models/user");
+const { registerSchema } = require("../../models/user");
 
-const ctrl = require("../../controllers/authControll");
+const {register } = require("../../controllers/authControll");
 
-router.post("/user/register", schemas.registerSchema, ctrl.register);
+router.post("/user/register", registerSchema, register);
 
 module.exports = router; 
