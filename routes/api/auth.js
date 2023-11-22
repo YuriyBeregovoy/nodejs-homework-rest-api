@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { schemas } = require("../../models/user");
-const isValidId = require("../../middlewares/isValidId")
+const { registerSchema } = require("../../models/user");
+// const isValidId = require("../../middlewares/isValidId")
 
+const { register} = require("../../controllers/authControll");
 
-const ctrl = require("../../controllers/authControll");
-
-router.post("/register",isValidId, schemas.registerSchema, ctrl.register);
+router.post("/register", registerSchema, register);
 
 module.exports = router; 
