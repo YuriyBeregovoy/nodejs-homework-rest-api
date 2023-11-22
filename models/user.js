@@ -23,10 +23,24 @@ const userSchema = new Schema(
       enum: ["starter", "pro", "business"],
       default: "starter"
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+    },
     token: String
   }
 
 );
 
 userSchema.post("save", hahdleMongooseError);
+
+const registerSchema = Joi.object({
+  password: Joi.string().min().required(),
+  email: Joi.string().pattern(emailRegexp).required,
+});
+
+const loginSchema = Joi.object({
+  email: Joi.string().pattern(emailRegexp).required,
+  password: Joi.string().min().required(),
+});
 
