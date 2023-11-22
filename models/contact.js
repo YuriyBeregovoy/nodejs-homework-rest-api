@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const hahdleMongooseError = require("../helpers/handleMongooseError");
+const handleMongooseError = require("../helpers/handleMongooseError");
 const Joi = require("joi");
  
 const contactSchema = new Schema(
@@ -20,7 +20,7 @@ const contactSchema = new Schema(
     },
   });
 
-contactSchema.post("save", hahdleMongooseError);
+contactSchema.post("save", handleMongooseError);
 
 const addSchema = Joi.object({
   name: Joi.string().required(),
