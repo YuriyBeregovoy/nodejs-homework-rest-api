@@ -1,4 +1,4 @@
-const { User, registerSchema } = require("../models/user");
+const { User } = require("../models/user");
 const HttpError = require('http-errors');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 
