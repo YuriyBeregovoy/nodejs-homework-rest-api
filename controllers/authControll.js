@@ -8,6 +8,7 @@ const register = async (req, res) => {
 
   res.json({
     email: newUser.email,
+     password: newUser.password,
   })
 
 };
