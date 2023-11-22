@@ -6,10 +6,7 @@ const ctrlWrapper = require('../helpers/ctrlWrapper');
 const register = async (req, res) => {
   const newUser = await User.create(req.body);
 
-  res.json({
-    email: newUser.email,
-     password: newUser.password,
-  })
+  res.json(newUser);
 
 };
 
