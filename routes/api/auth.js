@@ -9,9 +9,4 @@ router.post("/register", register);
 module.exports = router; 
 
 
-// http://localhost:3000/api/auth/register
 
-// {
-//     "email": "bogdan@gmail.com",
-//     "password": "123456"
-// }
