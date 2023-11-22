@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const hahdleMongooseError = require("../helpers/handleMongooseError");
+const handleMongooseError = require("../helpers/handleMongooseError");
 const Joi = require("joi");
 
 
@@ -32,15 +32,15 @@ const userSchema = new Schema(
 
 );
 
-userSchema.post("save", hahdleMongooseError);
+userSchema.post("save", handleMongooseError);
 
 const registerSchema = Joi.object({
   password: Joi.string().min(6).required(),
-  email: Joi.string().pattern(emailRegexp).required,
+  email: Joi.string().pattern(emailRegexp).required(),
 });
 
 const loginSchema = Joi.object({
-  email: Joi.string().pattern(emailRegexp).required,
+  email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).required(),
 });
 
