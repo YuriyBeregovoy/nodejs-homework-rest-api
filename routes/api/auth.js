@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-// const isValidId = require("../../middlewares/isValidId")
 
 const { register, login} = require("../../controllers/authControll");
 
