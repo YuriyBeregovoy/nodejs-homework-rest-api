@@ -4,7 +4,8 @@ const HttpError = require('http-errors');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 
 const getAll = async (req, res) => {
-    const result = await Contact.find();
+  const { _id: owner } = req.user;
+    const result = await Contact.find({owner});
    console.log(result);
   res.json(result);
 };
