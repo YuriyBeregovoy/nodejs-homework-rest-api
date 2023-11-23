@@ -1,4 +1,4 @@
-const { User } = require("../models/user");
+const { User, registerSchema, loginSchema  } = require("../models/user");
 const HttpError = require('http-errors');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 const bcrypt = require("bcrypt");
@@ -7,7 +7,12 @@ const { SECRET_KEY } = process.env;
 
 
 
-const register = async(req, res) => {
+const register = async (req, res) => {
+  
+    const { error } = registerSchema.validate(req.body);
+  if (error) {
+    throw HttpError(400, "Bad Request");
+  }
 
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -27,7 +32,13 @@ const register = async(req, res) => {
 };
 
 const login = async (req, res) => {
+
   const { email, password } = req.body;
+
+  const { error } =loginSchema.validate(req.body);
+  if (error) {
+    throw HttpError(400, "Bad Request");
+  }
   const user = await User.findOne({ email });
   if (!user) {
         throw HttpError(401, "Email or password is wrong");
