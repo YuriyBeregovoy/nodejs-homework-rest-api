@@ -3,7 +3,7 @@ const HttpError = require('http-errors');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 const bcrypt = require("bcrypt");
 
-const register = async (req, res) => {
+const register = async(req, res) => {
 
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -13,7 +13,6 @@ const register = async (req, res) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
-
   const newUser = await User.create({...req.body, password: hashPassword});
 
   res.status(201).json({
@@ -21,8 +20,31 @@ const register = async (req, res) => {
       email: newUser.email,
       subscription: newUser.subscription,
  }});
-
 };
+
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+        throw HttpError(401, "Email or password invalid");
+  }
+  const passwordCompare = await bcrypt.compare(password, user.password);
+  if (!passwordCompare) {
+            throw HttpError(401, "Email or password invalid");
+  }
+  const token = ;
+
+  res.json({
+    token,
+  })
+
+
+  
+}
+
+
+
+
 
 module.exports = {
   register: ctrlWrapper(register),
