@@ -55,7 +55,9 @@ const login = async (req, res) => {
   });
 };
 
-
+const getCurrent = async (req, res) => {
+  const { email, name } = req.user;
+}
 
 module.exports = {
   register: ctrlWrapper(register),
