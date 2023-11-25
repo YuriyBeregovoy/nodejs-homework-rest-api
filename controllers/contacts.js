@@ -4,7 +4,8 @@ const HttpError = require('http-errors');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 
 const getAll = async (req, res) => {
-    const result = await Contact.find();
+  const { _id: owner } = req.user;
+    const result = await Contact.find({owner});
    console.log(result);
   res.json(result);
 };
@@ -19,11 +20,13 @@ const getById = async (req, res) => {
 };
 
 const add = async (req, res) => {
+  const { _id: owner } = req.user;
+
     const { error } = addSchema.validate(req.body);
   if (error) {
     throw HttpError(400, error.message);
   }
-   const result = await Contact.create(req.body);
+   const result = await Contact.create({...req.body, owner});
   res.status(201).json(result);
 };
 

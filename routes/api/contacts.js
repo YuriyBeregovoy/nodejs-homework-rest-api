@@ -8,20 +8,21 @@ const {
   updateById,
   deleteById,
 } = require("../../controllers/contacts");
+const authenticate = require("../../middlewares/authenticate");
 
 const router = express.Router();
 
 
-router.get('/', getAll);
+router.get('/', authenticate, getAll);
 
-router.get('/:contactId', isValidId, getById);
+router.get('/:contactId', authenticate, isValidId, getById);
 
-router.post('/', add);
+router.post('/', authenticate, add);
 
-router.put('/:contactId', isValidId, updateById);
+router.put('/:contactId', authenticate, isValidId, updateById);
 
-router.patch('/:contactId/favorite', isValidId, updateStatusContact);
+router.patch('/:contactId/favorite', authenticate, isValidId, updateStatusContact);
 
-router.delete('/:contactId', isValidId, deleteById);
+router.delete('/:contactId', authenticate, isValidId, deleteById);
 
 module.exports = router;
