@@ -16,6 +16,9 @@ const getById = async (req, res) => {
   if (!contact) {
     return res.status(404).json({ message: "Not found" })
   }
+  if (String(contact.owner) !== String(req.user._id)) {
+      return res.status(404).json({ message: "Contact not found" });
+    }
   res.json(contact);
 };
 
