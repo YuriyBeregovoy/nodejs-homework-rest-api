@@ -4,6 +4,7 @@ const ctrlWrapper = require('../helpers/ctrlWrapper');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = process.env;
+const gravatar = require("gravatar");
 
 
 const register = async (req, res) => {
@@ -18,7 +19,10 @@ const register = async (req, res) => {
     throw HttpError(409, "Email already sn use");
   }
   const hashPassword = await bcrypt.hash(password, 10);
-  const newUser = await User.create({...req.body, password: hashPassword});
+  const avatarURL = gravatar.url(email);
+
+
+  const newUser = await User.create({...req.body, password: hashPassword, avatarURL});
 
   res.status(201).json({
     user: {
