@@ -5,6 +5,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = process.env;
 const gravatar = require("gravatar");
+const path = require("path");
+const fs = require("fs/promises");
+
+const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
 
 const register = async (req, res) => {
@@ -73,10 +77,19 @@ const logout = async (req, res) => {
 
 };
 
+const updateAvatar = async (req, res) => { 
+  const { path: temUpload, originalname } = req.file;
+  const resultUpload = path.join(avatarsDir, originalname);
+  await fs.rename(temUpload, resultUpload);
+  const avatarURL = path.join('avatars', originalname);
+
+}
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
+  updateAvatar: ctrlWrapper(updateAvatar),
 
 };
