@@ -88,7 +88,7 @@ const updateAvatar = async (req, res) => {
   try {
     const image = await Jimp.read(tempUpload);
     await image.cover(250, 250).write(resultUpload);
-    // await fs.rename(tempUpload, resultUpload);
+    await fs.rename(tempUpload, resultUpload);
     const avatarURL = path.join('avatars', filename);
     await User.findByIdAndUpdate(_id, { avatarURL });
 
@@ -96,9 +96,10 @@ const updateAvatar = async (req, res) => {
   } catch (error) {
     console.error('Error processing image:', error);
     res.status(500).json({ error: 'Error processing image' });
-  } finally {
-    await fs.unlink(tempUpload);
   }
+  // finally {
+  //   await fs.unlink(tempUpload);
+  // }
 
 }
 
