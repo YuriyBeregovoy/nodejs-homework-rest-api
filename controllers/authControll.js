@@ -7,6 +7,7 @@ const { SECRET_KEY } = process.env;
 const gravatar = require("gravatar");
 const path = require("path");
 const fs = require("fs/promises");
+const Jimp = require('jimp');
 
 const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
@@ -79,14 +80,25 @@ const logout = async (req, res) => {
 
 const updateAvatar = async (req, res) => { 
   const { _id } = req.user;
-  const { path: temUpload, originalname } = req.file;
+  const { path: tempUpload, originalname } = req.file;
   const filename = `${_id}_${originalname}`;
   const resultUpload = path.join(avatarsDir, filename);
-  await fs.rename(temUpload, resultUpload);
-  const avatarURL = path.join('avatars', filename);
-  await User.findByIdAndUpdate(_id, { avatarURL });
 
-  res.json({avatarURL,})
+
+  try {
+    const image = await Jimp.read(tempUpload);
+    await image.cover(250, 250).write(resultUpload);
+    await fs.rename(tempUpload, resultUpload);
+    const avatarURL = path.join('avatars', filename);
+    await User.findByIdAndUpdate(_id, { avatarURL });
+
+    res.json({ avatarURL, })
+  } catch (error) {
+    console.error('Error processing image:', error);
+    res.status(500).json({ error: 'Error processing image' });
+  } finally {
+    await fs.unlink(tempUpload);
+  }
 
 }
 
@@ -97,4 +109,4 @@ module.exports = {
   logout: ctrlWrapper(logout),
   updateAvatar: ctrlWrapper(updateAvatar),
 
-};
+}; 
