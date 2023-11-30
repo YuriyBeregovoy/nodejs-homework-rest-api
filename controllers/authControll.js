@@ -4,6 +4,12 @@ const ctrlWrapper = require('../helpers/ctrlWrapper');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = process.env;
+const gravatar = require("gravatar");
+const path = require("path");
+const fs = require("fs/promises");
+const Jimp = require('jimp');
+
+const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
 
 const register = async (req, res) => {
@@ -18,7 +24,10 @@ const register = async (req, res) => {
     throw HttpError(409, "Email already sn use");
   }
   const hashPassword = await bcrypt.hash(password, 10);
-  const newUser = await User.create({...req.body, password: hashPassword});
+  const avatarURL = gravatar.url(email);
+
+
+  const newUser = await User.create({...req.body, password: hashPassword, avatarURL});
 
   res.status(201).json({
     user: {
@@ -69,10 +78,34 @@ const logout = async (req, res) => {
 
 };
 
+const updateAvatar = async (req, res) => { 
+  const { _id } = req.user;
+  const { path: tempUpload, originalname } = req.file;
+  const filename = `${_id}_${originalname}`;
+  const resultUpload = path.join(avatarsDir, filename);
+
+
+  try {
+    const image = await Jimp.read(tempUpload);
+    await image.cover(250, 250).write(resultUpload);
+    const avatarURL = path.join('avatars', filename);
+    await User.findByIdAndUpdate(_id, { avatarURL });
+
+    res.json({ avatarURL, })
+  } catch (error) {
+    console.error('Error processing image:', error);
+    res.status(500).json({ error: 'Error processing image' });
+  } finally {
+    await fs.unlink(tempUpload);
+  }
+
+}
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
+  updateAvatar: ctrlWrapper(updateAvatar),
 
-};
+}; 
