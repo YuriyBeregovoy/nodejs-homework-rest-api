@@ -8,7 +8,7 @@ const gravatar = require("gravatar");
 const path = require("path");
 const fs = require("fs/promises");
 const Jimp = require('jimp');
-const { nanoid } = require("nanoid");
+const { v4: uuidv4 } = require('uuid');
 const sendMail = require("../helpers/sendMail")
 
 const avatarsDir = path.join(__dirname, "../", "public", "avatars");
@@ -27,7 +27,7 @@ const register = async (req, res) => {
   }
   const hashPassword = await bcrypt.hash(password, 10);
   const avatarURL = gravatar.url(email);
-  const verificationCode = nanoid();
+  const verificationCode = uuidv4();
 
 
   const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL, verificationCode });
