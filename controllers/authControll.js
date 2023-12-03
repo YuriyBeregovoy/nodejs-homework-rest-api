@@ -9,7 +9,7 @@ const path = require("path");
 const fs = require("fs/promises");
 const Jimp = require('jimp');
 const { nanoid } = require("nanoid");
-const sendEmail = require("../helpers/sendEmail")
+const sendMail = require("../helpers/sendMail")
 
 const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
@@ -36,7 +36,7 @@ const register = async (req, res) => {
     html: `<a target="_blank" href="${BASE_URL}/users/verify/${verificationCode}">Click verify email</a>`
   };
 
-  await sendEmail(verifyEmail);
+  await sendMail(verifyEmail);
 
   res.status(201).json({
     user: {
