@@ -3,12 +3,13 @@ const HttpError = require('http-errors');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY, BASE_URL } = process.env;
 const gravatar = require("gravatar");
 const path = require("path");
 const fs = require("fs/promises");
 const Jimp = require('jimp');
-const {nanoid} = require("nanoid")
+const { nanoid } = require("nanoid");
+const sendEmail = require("../helpers/sendEmail")
 
 const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
@@ -29,7 +30,11 @@ const register = async (req, res) => {
   const verificationCode = nanoid();
 
 
-  const newUser = await User.create({...req.body, password: hashPassword, avatarURL, verificationCode});
+  const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL, verificationCode });
+  const verifyEmail = {
+    to: email, subject: "Verify email",
+    html: `<a target="_blank" href="${BASE_URL}/users/verify/${verificationCode}">Click verify email</a>`
+  }
 
   res.status(201).json({
     user: {
