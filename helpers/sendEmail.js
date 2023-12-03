@@ -12,7 +12,7 @@ const api = new ElasticEmail.EmailsApi();
  
 const email = ElasticEmail.EmailMessageData.constructFromObject({
   Recipients: [
-    new ElasticEmail.EmailRecipient("lafic23473@viperace.com")
+    new ElasticEmail.EmailRecipient("jellicocaptain@gmail.com")
   ],
   Content: {
     Body: [
