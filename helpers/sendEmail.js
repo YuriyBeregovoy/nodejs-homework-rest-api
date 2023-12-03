@@ -1,22 +1,22 @@
-import ElasticEmail from '@elasticemail/elasticemail-client';
-import "dotenv/config";
+const ElasticEmail = require('@elasticemail/elasticemail-client');
+require("dotenv/config");
 
-const {ELASTIC_API_KEY, EMAIL_FROM} = process.env;
- 
+const { ELASTIC_API_KEY, EMAIL_FROM } = process.env;
+
 const defaultClient = ElasticEmail.ApiClient.instance;
- 
-const {apikey} = defaultClient.authentications;
+
+const { apikey } = defaultClient.authentications;
 apikey.apiKey = ELASTIC_API_KEY;
- 
+
 const api = new ElasticEmail.EmailsApi();
- 
-const email = ElasticEmail.EmailMessageData.constructFromObject({
+
+const email = new ElasticEmail.EmailMessageData({
   Recipients: [
     new ElasticEmail.EmailRecipient("jellicocaptain@gmail.com")
   ],
   Content: {
     Body: [
-      ElasticEmail.BodyPart.constructFromObject({
+      new ElasticEmail.BodyPart({
         ContentType: "HTML",
         Content: "<strong>Test email</strong>"
       })
@@ -25,8 +25,8 @@ const email = ElasticEmail.EmailMessageData.constructFromObject({
     From: EMAIL_FROM
   }
 });
- 
-const callback = function(error, data, response) {
+
+const callback = function (error, data, response) {
   if (error) {
     console.error(error.message);
   } else {
