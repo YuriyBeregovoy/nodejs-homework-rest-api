@@ -9,7 +9,7 @@ router.post("/register", register);
 
 router.get('/verify/:verificationToken', verifyEmail);
 
-router.post('/verify/:verificationToken', resendVerifyEmail);
+router.post('/verify', resendVerifyEmail);
 
 router.post("/login", login);
 
