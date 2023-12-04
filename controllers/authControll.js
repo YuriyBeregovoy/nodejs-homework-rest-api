@@ -27,13 +27,13 @@ const register = async (req, res) => {
   }
   const hashPassword = await bcrypt.hash(password, 10);
   const avatarURL = gravatar.url(email);
-  const verificationCode = uuidv4();
+  const verificationToken = uuidv4();
 
 
-  const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL, verificationCode });
+  const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL, verificationToken });
   const verifyEmail = {
     to: email, subject: "Verify email",
-    html: `<a target="_blank" href="${BASE_URL}/users/verify/${verificationCode}">Click verify email</a>`
+    html: `<a target="_blank" href="${BASE_URL}/users/verify/${verificationToken}">Click verify email</a>`
   };
 
   await sendMail(verifyEmail);
