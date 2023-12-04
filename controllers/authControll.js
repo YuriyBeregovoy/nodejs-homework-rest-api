@@ -1,4 +1,4 @@
-const { User, registerSchema, loginSchema  } = require("../models/user");
+const { User, registerSchema, loginSchema, emailSchema  } = require("../models/user");
 const HttpError = require('http-errors');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 const bcrypt = require("bcrypt");
@@ -53,6 +53,15 @@ const verifyEmail = async (req, res) => {
   }
   await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: "" });
    res.status(200).json( {message: 'Verification successful'});
+};
+
+const resendVerifyEmail = async (req, res) => { 
+     const { error } = emailSchema.validate(req.body);
+  if (error) {
+    throw HttpError(400, "Bad Request");
+  }
+
+
 };
 
 const login = async (req, res) => {
@@ -130,7 +139,8 @@ const updateAvatar = async (req, res) => {
 
 module.exports = {
   register: ctrlWrapper(register),
-  verifyEmail:ctrlWrapper(verifyEmail),
+  verifyEmail: ctrlWrapper(verifyEmail),
+  resendVerifyEmail: ctrlWrapper(resendVerifyEmail),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
