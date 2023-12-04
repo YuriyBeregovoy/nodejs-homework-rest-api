@@ -1,8 +1,6 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-
-const sendMail = async (emailOptions) => {
 const { META_PASSWORD } = process.env;
 
 const nodemailerCnfg = {
@@ -18,25 +16,13 @@ const nodemailerCnfg = {
 
 const transport = nodemailer.createTransport(nodemailerCnfg);
 
-// const email = {
-//   to: "yuriy_beregovoy@meta.ua",
-//   from: "yuriy_beregovoy@meta.ua",
-//   subject: "Test email",
-//   html: "<p><strong>Test email</strong> from localhost: 3000</p>"
-// };
-
-// transport.sendMail(email)
-//   .then(() => console.log("Email send success"))
-//   .catch(error => console.log(error.message));
-
-  try {
-    const info = await transport.sendMail(emailOptions);
-    console.log("Email sent: " + info.response);
-    return info;
-  } catch (error) {
-    console.error("Error sending email: ", error.message);
-    throw new Error("Error sending email");
-  }
+const email = {
+  to: 'recipient@example.com',
+  from: "yuriy_beregovoy@meta.ua",
+  subject: "Test email",
+  html: "<p><strong>Test email</strong> from localhost: 3000</p>"
 };
 
-module.exports = sendMail;
+transport.sendMail(email)
+  .then(() => console.log("Email send success"))
+  .catch(error => console.log(error.message));
