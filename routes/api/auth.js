@@ -1,13 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
-const { register, login, getCurrent, logout, updateAvatar, verifyEmail} = require("../../controllers/authControll");
+const { register, login, getCurrent, logout, updateAvatar, verifyEmail, resendVerifyEmail} = require("../../controllers/authControll");
 const authenticate = require("../../middlewares/authenticate");
 const upload = require("../../middlewares/upload")
 
 router.post("/register", register);
 
 router.get('/verify/:verificationToken', verifyEmail);
+
+router.post('/verify/:verificationToken', resendVerifyEmail);
 
 router.post("/login", login);
 
