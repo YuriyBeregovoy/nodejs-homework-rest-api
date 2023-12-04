@@ -55,27 +55,38 @@ const verifyEmail = async (req, res) => {
    res.status(200).json( {message: 'Verification successful'});
 };
 
-const resendVerifyEmail = async (req, res) => { 
-     const { error } = emailSchema.validate(req.body);
+const resendVerifyEmail = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ message: 'missing required field email' });
+  }
+
+  const { error } = emailSchema.validate({ email });
   if (error) {
     throw HttpError(400, "Bad Request");
   }
-const { email } = req.body;
+
   const user = await User.findOne({ email });
+
   if (!user) {
-    throw HttpError(400, "missing required field email");
+    throw HttpError(401, "Email not found");
   }
+
   if (user.verify) {
-     throw HttpError(400, "Verification has already been passed");
+    return res.status(400).json({ message: "Verification has already been passed" });
   }
 
   const verifyEmail = {
-    to: email, subject: "Verify email",
+    to: email,
+    subject: "Verify email",
     html: `<a target="_blank" href="${BASE_URL}/users/verify/${user.verificationToken}">Click verify email</a>`
   };
+
   await sendMail(verifyEmail);
-   res.status(200).json( {message: 'Verification email sent'});
-  };
+  res.status(200).json({ message: 'Verification email sent' });
+};
+
 
 const login = async (req, res) => {
   const { email, password } = req.body;
